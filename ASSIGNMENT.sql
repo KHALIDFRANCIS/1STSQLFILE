@@ -1,9 +1,10 @@
 SHOW DATABASES;
 
 CREATE DATABASE BOOKZ;
-USE BOOKZ;
 
 SHOW DATABASES;
+
+USE BOOKZ;
 
 /*------------------------------------------------------------------*/
 
@@ -60,7 +61,7 @@ CREATE TABLE REVIEWER (
 lastname CHAR(50) NOT NULL, 
 firstname CHAR(50) NOT NULL,
 phonenum INT(10) NOT NULL, 
-email CHAR(50) NOT NULL, 
+email NVARCHAR(50) NOT NULL, 
 affiliation CHAR(50) NOT NULL, 
 authorfeedback VARCHAR(100), 
 committeefeedback VARCHAR(100), 
@@ -70,10 +71,10 @@ PRIMARY KEY (lastname)
 DESCRIBE REVIEWER;
 
 INSERT INTO REVIEWER ( lastname, firstname, phonenum, email, affiliation, authorfeedback, committeefeedback) VALUES
-('Reigns', 'Roman', 7187187181, 'RRgmailcom', 'WWE', NULL, NULL),
-('Man', 'Spider', 917917917, 'SPMaolcom', 'Marvel', NULL, NULL),
-('Tubbies', 'Tele', 000111222, 'TTaolcom', 'Channeltirteen', NULL, NULL),
-('SUNG', 'SAM', 234534344, 'NotenineAttCom', 'Smartphone', NULL, NULL);
+('Reigns', 'Roman', 7187187181, 'RR@gmail.com', 'WWE', NULL, NULL),
+('Man', 'Spider', 917917917, 'SPM@aol.com', 'Marvel', NULL, NULL),
+('Tubbies', 'Tele', 000111222, 'TT@aol.com', 'Channeltirteen', NULL, NULL),
+('SUNG', 'SAM', 234534344, 'Notenine@Att.Com', 'Android', NULL, NULL);
 
 SELECT * FROM REVIEWER;
 
@@ -121,18 +122,50 @@ INSERT INTO TOPIC (topicname, id) VALUES
 
 SELECT * FROM TOPIC;
 
+SHOW TABLES;
 
+/*------------------------------------------------------------------*/
 
+CREATE TABLE AUTHORPAPER
+(
+ln VARCHAR(30) NOT NULL,
+fn CHAR(50) NOT NULL,
+FOREIGN KEY (ln) REFERENCES AUTHOR (lastname),
+FOREIGN KEY (fn) REFERENCES PAPER (filename),
+UNIQUE(ln),
+UNIQUE(fn) );
 
+DESCRIBE AUTHORPAPER;
 
+INSERT INTO AUTHORPAPER (ln, fn) VALUES
+('Croms', 'TBOCROMS'),
+('Harvey', 'TLAMan'),
+('Rowling', 'HPotter'),
+('Bob', 'BBottom');
 
+SELECT * FROM AUTHORPAPER;
 
+SHOW TABLES;
 
+/*------------------------------------------------------------------*/
 
+CREATE TABLE PAPERREVIEWER
+(
+fn CHAR(50) NOT NULL,
+rvln CHAR(50) NOT NULL,
+FOREIGN KEY (ln) REFERENCES AUTHOR (lastname),
+FOREIGN KEY (rvln) REFERENCES REVIEWER (lastname) );
 
+DESCRIBE PAPERREVIEWER;
 
+INSERT INTO PAPERREVIEWER (ln, rvln) VALUES
+('Croms', 'Reigns'),
+('Harvey', 'Man'),
+('Rowling', 'Tubbies'),
+('Bob', 'SUNG');
 
+SELECT * FROM PAPERREVIEWER;
 
-
+SHOW TABLES;
 
 
